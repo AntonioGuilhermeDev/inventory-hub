@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+@layer utilities {
+  .bg-brand-bg {
+    background-color: #f3f4f6;
+  }
+
+  .bg-brand-green {
+    background-color: #0f766e;
+  }
+
+  .bg-brand-orange {
+    background-color: #f97316;
+  }
+
+  .hover\:bg-brand-orange-hover:hover {
+    background-color: #ea580c;
+  }
+
+  .text-brand-green {
+    color: #0f766e;
+  }
+
+  .text-brand-orange {
+    color: #f97316;
+  }
+}
