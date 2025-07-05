@@ -9,6 +9,7 @@
             aria-controls="default-sidebar"
             type="button"
             class="lg:hidden p-2 text-md rounded-lg focus:outline-none"
+            @click="$emit('toggle-sidebar')"
           >
             <span class="sr-only">Open sidebar</span>
             <font-awesome-icon :icon="['fas', 'bars']" class="text-brand-green" />
