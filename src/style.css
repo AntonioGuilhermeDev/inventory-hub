@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 
 @layer utilities {
-  .bg-brand-bg {
-    background-color: #f3f4f6;
+  .bg-brand-sidebar {
+    background-color: #0f766e;
   }
 
-  .bg-brand-green {
-    background-color: #0f766e;
+  .bg-brand-body {
+    background-color: #e5e7eb;
   }
 
   .bg-brand-orange {
@@ -26,6 +26,10 @@
   }
 
   .text-brand-orange {
+    color: #f97316;
+  }
+
+  .hover\:text-brand-orange:hover {
     color: #f97316;
   }
 

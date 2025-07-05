@@ -1,14 +1,16 @@
 <template>
-  <main-nav />
+  <div class="bg-brand-body min-h-screen">
+    <top-nav />
+  </div>
 </template>
 
 <script>
-  import MainNav from './components/Navigation/MainNav.vue';
+  import TopNav from './components/Navigation/TopNav.vue';
 
   export default {
     name: 'App',
     components: {
-      MainNav,
+      TopNav,
     },
   };
 </script>

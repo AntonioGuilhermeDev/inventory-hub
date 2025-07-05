@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        'custom-md': '960px',
+      },
     },
   },
   plugins: [],
