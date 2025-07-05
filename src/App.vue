@@ -1,9 +1,12 @@
 <template>
   <div class="bg-brand-body min-h-screen">
     <TopNav @toggle-sidebar="sidebarOpen = !sidebarOpen" />
-    <SideBar :open="sidebarOpen" />
-
-    <div :class="['pt-16 transition-padding duration-300', sidebarOpen ? 'pl-64' : 'pl-0']">
+    <SideBar
+      :open="sidebarOpen"
+      :isLargeScreen="isLargeScreen"
+      @close-sidebar="sidebarOpen = false"
+    />
+    <div :class="['pt-16 transition-all duration-300', isLargeScreen ? 'pl-64' : '']">
       <router-view />
     </div>
   </div>
@@ -17,8 +20,32 @@
     components: { TopNav, SideBar },
     data() {
       return {
-        sidebarOpen: false,
+        sidebarOpen: true,
+        windowWidth: window.innerWidth,
       };
+    },
+    computed: {
+      isLargeScreen() {
+        return this.windowWidth >= 1024;
+      },
+    },
+    mounted() {
+      window.addEventListener('resize', this.handleResize);
+    },
+    beforeUnmount() {
+      window.removeEventListener('resize', this.handleResize);
+    },
+    methods: {
+      handleResize() {
+        this.windowWidth = window.innerWidth;
+      },
+    },
+    watch: {
+      $route() {
+        if (!this.isLargeScreen) {
+          this.sidebarOpen = false;
+        }
+      },
     },
   };
 </script>
