@@ -57,4 +57,20 @@ const router = createRouter({
   routes,
 });
 
+function isLoggedIn() {
+  return !!localStorage.getItem('token');
+}
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = isLoggedIn();
+
+  if (to.meta.requiresAuth && !loggedIn) {
+    next({ name: 'Login' });
+  } else if (to.meta.requiresGuest && loggedIn) {
+    next({ name: 'Dashboard' });
+  } else {
+    next();
+  }
+});
+
 export default router;

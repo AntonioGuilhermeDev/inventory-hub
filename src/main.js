@@ -13,8 +13,25 @@ import {
   faSearch,
   faSignOutAlt,
   faBars,
+  faEnvelope,
+  faLock,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faChartLine, faBox, faShoppingCart, faUsers, faStore, faSearch, faSignOutAlt, faBars);
+library.add(
+  faChartLine,
+  faBox,
+  faShoppingCart,
+  faUsers,
+  faStore,
+  faSearch,
+  faSignOutAlt,
+  faBars,
+  faEnvelope,
+  faLock,
+  faEye,
+  faEyeSlash
+);
 
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app');

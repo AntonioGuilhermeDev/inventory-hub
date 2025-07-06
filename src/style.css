@@ -33,6 +33,30 @@
     color: #f97316;
   }
 
+  .ring-brand-green {
+    --tw-ring-color: #0f766e;
+  }
+
+  .ring-brand-orange {
+    --tw-ring-color: #f97316;
+  }
+
+  .ring-brand-green-50 {
+    --tw-ring-color: rgb(15 118 110 / 0.5);
+  }
+
+  .ring-brand-orange-50 {
+    --tw-ring-color: rgb(249 115 22 / 0.5);
+  }
+
+  .border-brand-green {
+    border: 1px solid #0f766e;
+  }
+
+  .border-brand-orange {
+    border: 1px solid #f97316;
+  }
+
   .text-base {
     font-size: 1rem;
     font-weight: 400;
