@@ -18,20 +18,13 @@
           <img src="../../assets/logo.svg" alt="Logo" class="h-12 w-auto object-contain" />
           <h1 class="text-header text-brand-green font-semibold text-lg">InventoryHub</h1>
         </div>
-
-        <ProfileImage />
       </div>
     </div>
   </header>
 </template>
 
 <script>
-  import ProfileImage from './ProfileImage.vue';
-
   export default {
     name: 'TopNav',
-    components: {
-      ProfileImage,
-    },
   };
 </script>

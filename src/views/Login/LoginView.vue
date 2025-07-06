@@ -137,6 +137,7 @@
         if (!this.validateFields()) {
           return;
         }
+
         try {
           const response = await login(this.email, this.password);
           const { message, ...dataToStore } = response;
