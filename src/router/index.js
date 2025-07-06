@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import AppLayout from '../layout/AppLayout.vue';
+import LoginView from '../views/Login/LoginView.vue';
 import DashboardView from '../views/Dashboard/DashboardView.vue';
 import ProdutosView from '../views/Produtos/ProdutosView.vue';
 import VendasView from '../views/Vendas/VendasView.vue';
@@ -8,28 +10,45 @@ import EstabelecimentosView from '../views/Estabelecimentos/EstabelecimentosView
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
-    component: DashboardView,
+    redirect: '/login',
   },
   {
-    path: '/produtos',
-    name: 'Produtos',
-    component: ProdutosView,
+    path: '/login',
+    name: 'Login',
+    component: LoginView,
+    meta: { requiresGuest: true },
   },
   {
-    path: '/vendas',
-    name: 'Vendas',
-    component: VendasView,
-  },
-  {
-    path: '/usuarios',
-    name: 'Usuarios',
-    component: UsuariosView,
-  },
-  {
-    path: '/estabelecimentos',
-    name: 'Estabelecimentos',
-    component: EstabelecimentosView,
+    path: '/',
+    component: AppLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: DashboardView,
+      },
+      {
+        path: 'produtos',
+        name: 'Produtos',
+        component: ProdutosView,
+      },
+      {
+        path: 'vendas',
+        name: 'Vendas',
+        component: VendasView,
+      },
+      {
+        path: 'usuarios',
+        name: 'Usuarios',
+        component: UsuariosView,
+      },
+      {
+        path: 'estabelecimentos',
+        name: 'Estabelecimentos',
+        component: EstabelecimentosView,
+      },
+    ],
   },
 ];
 

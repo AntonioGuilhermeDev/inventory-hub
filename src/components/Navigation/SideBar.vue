@@ -10,7 +10,7 @@
         : open
           ? 'translate-x-0'
           : '-translate-x-full',
-      !isLargeScreen ? 'bg-opacity-95 backdrop-blur-md' : '', // efeito blur no mobile por cima
+      !isLargeScreen ? 'bg-opacity-95 backdrop-blur-md' : '',
     ]"
     aria-label="Sidebar"
   >
@@ -44,7 +44,7 @@
     data() {
       return {
         menuItems: [
-          { label: 'Dashboard', icon: 'chart-line', path: '/' },
+          { label: 'Dashboard', icon: 'chart-line', path: '/dashboard' },
           { label: 'Produtos', icon: 'box', path: '/produtos' },
           { label: 'Vendas', icon: 'shopping-cart', path: '/vendas' },
           { label: 'Usuários', icon: 'users', path: '/usuarios' },
