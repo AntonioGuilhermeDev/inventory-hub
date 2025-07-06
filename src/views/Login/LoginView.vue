@@ -89,6 +89,8 @@
 </template>
 
 <script>
+  import { login } from '../../services/authService';
+  import { saveUser } from '../../utils/user';
   export default {
     name: 'LoginView',
     data() {
@@ -131,9 +133,18 @@
 
         return isValid;
       },
-      login() {
+      async login() {
         if (!this.validateFields()) {
           return;
+        }
+        try {
+          const response = await login(this.email, this.password);
+          const { message, ...dataToStore } = response;
+          saveUser(dataToStore);
+          this.$router.push('/dashboard');
+        } catch (error) {
+          console.error('Erro ao logar:', error);
+          this.passwordError = 'Email ou senha inválidos';
         }
       },
     },

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { isLoggedIn } from '../utils/user';
 import AppLayout from '../layout/AppLayout.vue';
 import LoginView from '../views/Login/LoginView.vue';
 import DashboardView from '../views/Dashboard/DashboardView.vue';
@@ -56,10 +57,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-function isLoggedIn() {
-  return !!localStorage.getItem('token');
-}
 
 router.beforeEach((to, from, next) => {
   const loggedIn = isLoggedIn();
