@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { isLoggedIn } from '../utils/user';
 import AppLayout from '../layout/AppLayout.vue';
 import LoginView from '../views/Login/LoginView.vue';
 import DashboardView from '../views/Dashboard/DashboardView.vue';
@@ -7,6 +6,13 @@ import ProdutosView from '../views/Produtos/ProdutosView.vue';
 import VendasView from '../views/Vendas/VendasView.vue';
 import UsuariosView from '../views/Usuarios/UsuariosView.vue';
 import EstabelecimentosView from '../views/Estabelecimentos/EstabelecimentosView.vue';
+
+
+const roleRoutes = {
+  OWNER: ['/dashboard', '/produtos', '/vendas', '/usuarios', '/estabelecimentos'],
+  MANAGER: ['/produtos', '/vendas', '/usuarios'],
+  SELLER: ['/produtos', '/vendas'],
+};
 
 const routes = [
   {
@@ -57,17 +63,51 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+// Funções auxiliares
+function isLoggedIn() {
+  const currentUser = sessionStorage.getItem('currentUser');
+  if (!currentUser) return false;
+
+  try {
+    const userData = JSON.parse(currentUser);
+    return !!userData.token;
+  } catch {
+    return false;
+  }
+}
+
+function getUserRole() {
+  const currentUser = sessionStorage.getItem('currentUser');
+  if (!currentUser) return null;
+
+  try {
+    const userData = JSON.parse(currentUser);
+    return userData.user?.role || null;
+  } catch {
+    return null;
+  }
+}
 
 router.beforeEach((to, from, next) => {
   const loggedIn = isLoggedIn();
+  const role = getUserRole();
 
   if (to.meta.requiresAuth && !loggedIn) {
-    next({ name: 'Login' });
-  } else if (to.meta.requiresGuest && loggedIn) {
-    next({ name: 'Dashboard' });
-  } else {
-    next();
+    return next({ name: 'Login' });
   }
+
+  if (to.meta.requiresGuest && loggedIn) {
+    return next({ path: roleRoutes[role]?.[0] || '/dashboard' });
+  }
+
+  if (to.meta.requiresAuth && role) {
+    const allowedRoutes = roleRoutes[role] || [];
+    if (!allowedRoutes.includes(to.path)) {
+      return next({ path: allowedRoutes[0] });
+    }
+  }
+
+  next();
 });
 
 export default router;

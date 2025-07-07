@@ -75,18 +75,34 @@
     },
     data() {
       return {
-        menuItems: [
+        menuItems: [],
+        userData: null,
+      };
+    },
+    created() {
+      this.userData = getUser();
+      const roleMenu = {
+        OWNER: [
           { label: 'Dashboard', icon: 'chart-line', path: '/dashboard' },
           { label: 'Produtos', icon: 'box', path: '/produtos' },
           { label: 'Vendas', icon: 'shopping-cart', path: '/vendas' },
           { label: 'Usuários', icon: 'users', path: '/usuarios' },
           { label: 'Estabelecimentos', icon: 'store', path: '/estabelecimentos' },
         ],
-        userData: null,
+        MANAGER: [
+          { label: 'Produtos', icon: 'box', path: '/produtos' },
+          { label: 'Vendas', icon: 'shopping-cart', path: '/vendas' },
+          { label: 'Usuários', icon: 'users', path: '/usuarios' },
+        ],
+        SELLER: [
+          { label: 'Produtos', icon: 'box', path: '/produtos' },
+          { label: 'Vendas', icon: 'shopping-cart', path: '/vendas' },
+        ],
       };
-    },
-    mounted() {
-      this.userData = getUser();
+
+      if (this.userData && this.userData.user) {
+        this.menuItems = roleMenu[this.userData.user.role] || [];
+      }
     },
     methods: {
       logout() {
