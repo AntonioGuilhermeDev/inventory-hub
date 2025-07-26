@@ -9,6 +9,10 @@
     background-color: #e5e7eb;
   }
 
+  .bg-brand-green {
+    background-color: #0f766e;
+  }
+
   .bg-brand-orange {
     background-color: #f97316;
   }
@@ -58,7 +62,7 @@
   }
 
   .border-brand-orange {
-    border: 1px solid #f97316;
+    border: 2px solid #f97316;
   }
 
   .text-base {

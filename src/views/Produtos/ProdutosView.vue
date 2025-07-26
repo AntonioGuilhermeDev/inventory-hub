@@ -1,7 +1,41 @@
 <template>
-  <div>
-    <h2 class="text-2xl font-bold">Produtos</h2>
-    <p>Conteúdo da página Produtos</p>
+  <div class="px-8 py-2">
+    <h1 class="text-header">Produtos</h1>
+
+    <div
+      class="w-full mx-auto mt-5 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto"
+    >
+      <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500">
+        <li class="me-2">
+          <router-link
+            to="/produtos"
+            class="inline-block p-4 rounded-t-lg"
+            :class="{
+              'text-white bg-brand-green border-b-[4px]': $route.name === 'ProductList',
+              'hover:text-gray-600 hover:bg-gray-50': $route.name !== 'ProductList',
+            }"
+          >
+            Lista de Produtos
+          </router-link>
+        </li>
+        <li class="me-2">
+          <router-link
+            to="/produtos/criar"
+            class="inline-block p-4 rounded-t-lg"
+            :class="{
+              'text-white bg-brand-green border-b-[4px]': $route.name === 'CreateProduct',
+              'hover:text-gray-600 hover:bg-gray-50': $route.name !== 'CreateProduct',
+            }"
+          >
+            Criar Produto
+          </router-link>
+        </li>
+      </ul>
+
+      <div class="p-4">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 

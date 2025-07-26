@@ -17,6 +17,10 @@ import {
   faLock,
   faEye,
   faEyeSlash,
+  faChevronLeft,
+  faChevronRight,
+  faTrash,
+  faPencil,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -31,7 +35,11 @@ library.add(
   faEnvelope,
   faLock,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faChevronLeft,
+  faChevronRight,
+  faTrash,
+  faPencil
 );
 
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app');

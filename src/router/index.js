@@ -6,9 +6,10 @@ import ProdutosView from '../views/Produtos/ProdutosView.vue';
 import VendasView from '../views/Vendas/VendasView.vue';
 import UsuariosView from '../views/Usuarios/UsuariosView.vue';
 import EstabelecimentosView from '../views/Estabelecimentos/EstabelecimentosView.vue';
+import CreateProduct from '../views/Produtos/CreateProduct.vue';
+import ProductList from '../views/Produtos/ProductList.vue';
 
-
-const roleRoutes = {
+const roleMainRoutes = {
   OWNER: ['/dashboard', '/produtos', '/vendas', '/usuarios', '/estabelecimentos'],
   MANAGER: ['/produtos', '/vendas', '/usuarios'],
   SELLER: ['/produtos', '/vendas'],
@@ -37,8 +38,20 @@ const routes = [
       },
       {
         path: 'produtos',
-        name: 'Produtos',
         component: ProdutosView,
+        meta: { requiresAuth: true },
+        children: [
+          {
+            path: '',
+            name: 'ProductList',
+            component: ProductList,
+          },
+          {
+            path: 'criar',
+            name: 'CreateProduct',
+            component: CreateProduct,
+          },
+        ],
       },
       {
         path: 'vendas',
@@ -55,6 +68,10 @@ const routes = [
         name: 'Estabelecimentos',
         component: EstabelecimentosView,
       },
+      {
+        path: '/:pathMatch(.*)*',
+        redirect: '/dashboard',
+      },
     ],
   },
 ];
@@ -63,7 +80,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-// Funções auxiliares
+
 function isLoggedIn() {
   const currentUser = sessionStorage.getItem('currentUser');
   if (!currentUser) return false;
@@ -88,6 +105,19 @@ function getUserRole() {
   }
 }
 
+function hasAccess(path, role) {
+  const mainRoutes = roleMainRoutes[role] || [];
+  
+  const hasPrefixAccess = mainRoutes.some(mainRoute => 
+    path === mainRoute || 
+    path.startsWith(`${mainRoute}/`)
+  );
+  
+  const routeExists = router.resolve(path).matched.length > 0;
+  
+  return hasPrefixAccess && routeExists;
+}
+
 router.beforeEach((to, from, next) => {
   const loggedIn = isLoggedIn();
   const role = getUserRole();
@@ -97,13 +127,14 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.meta.requiresGuest && loggedIn) {
-    return next({ path: roleRoutes[role]?.[0] || '/dashboard' });
+    const firstRoute = roleMainRoutes[role]?.[0] || '/dashboard';
+    return next({ path: firstRoute });
   }
 
   if (to.meta.requiresAuth && role) {
-    const allowedRoutes = roleRoutes[role] || [];
-    if (!allowedRoutes.includes(to.path)) {
-      return next({ path: allowedRoutes[0] });
+    if (!hasAccess(to.fullPath, role)) {
+      const firstRoute = roleMainRoutes[role]?.[0] || '/dashboard';
+      return next({ path: firstRoute });
     }
   }
 
