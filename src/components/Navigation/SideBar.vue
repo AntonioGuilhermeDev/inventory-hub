@@ -63,6 +63,7 @@
 <script>
   import { getUser, clearUser } from '../../utils/user';
   import ProfileImage from './ProfileImage.vue';
+  import { translateRole } from '../../utils/utils';
 
   export default {
     name: 'SideBar',
@@ -110,17 +111,7 @@
         this.$emit('close-sidebar');
         this.$router.push('/login');
       },
-      translateRole(role) {
-        if (!role) return '';
-
-        const roleTranslations = {
-          OWNER: 'Proprietário',
-          MANAGER: 'Gerente',
-          SELLER: 'Vendedor',
-        };
-
-        return roleTranslations[role] || role;
-      },
+      translateRole,
     },
   };
 </script>

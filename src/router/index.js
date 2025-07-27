@@ -8,6 +8,8 @@ import UsuariosView from '../views/Usuarios/UsuariosView.vue';
 import EstabelecimentosView from '../views/Estabelecimentos/EstabelecimentosView.vue';
 import CreateProduct from '../views/Produtos/CreateProduct.vue';
 import ProductList from '../views/Produtos/ProductList.vue';
+import UserList from '../views/Usuarios/UserList.vue';
+import CreateUser from '../views/Usuarios/CreateUser.vue';
 
 const roleMainRoutes = {
   OWNER: ['/dashboard', '/produtos', '/vendas', '/usuarios', '/estabelecimentos'],
@@ -39,7 +41,6 @@ const routes = [
       {
         path: 'produtos',
         component: ProdutosView,
-        meta: { requiresAuth: true },
         children: [
           {
             path: '',
@@ -60,8 +61,19 @@ const routes = [
       },
       {
         path: 'usuarios',
-        name: 'Usuarios',
         component: UsuariosView,
+        children: [
+          {
+            path: '',
+            name: 'UserList',
+            component: UserList,
+          },
+          {
+            path: 'criar',
+            name: 'CreateUser',
+            component: CreateUser,
+          },
+        ],
       },
       {
         path: 'estabelecimentos',
@@ -107,14 +119,13 @@ function getUserRole() {
 
 function hasAccess(path, role) {
   const mainRoutes = roleMainRoutes[role] || [];
-  
-  const hasPrefixAccess = mainRoutes.some(mainRoute => 
-    path === mainRoute || 
-    path.startsWith(`${mainRoute}/`)
+
+  const hasPrefixAccess = mainRoutes.some(
+    (mainRoute) => path === mainRoute || path.startsWith(`${mainRoute}/`)
   );
-  
+
   const routeExists = router.resolve(path).matched.length > 0;
-  
+
   return hasPrefixAccess && routeExists;
 }
 

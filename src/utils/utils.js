@@ -5,3 +5,15 @@ export function formatToCurrency(value) {
     currency: 'BRL',
   });
 }
+
+export function translateRole(role) {
+  if (!role) return '';
+
+  const roleTranslations = {
+    OWNER: 'Proprietário',
+    MANAGER: 'Gerente',
+    SELLER: 'Vendedor',
+  };
+
+  return roleTranslations[role] || role;
+}
